@@ -1,0 +1,35 @@
+<!-- Frontend/templates/Frontend/summoner.html -->
+{% extends 'base.html' %}
+
+{% block title %}Summoner Page{% endblock %}
+
+{% block content %}
+
+<!-- summoner.html -->
+<form method="post" action="{% url 'save_summoner' summoner_name='StaticNameForTesting' %}">
+    {% csrf_token %}
+    <div id="SummonersDetails">
+        <img src="https://opgg-static.akamaized.net/meta/images/profile_icons/profileIcon660.jpg?image=q_auto,f_webp,w_auto&amp;v=1710914129937" alt="profile image">
+        <h2 id="SummonerNameLabel">Summoner name</h2>
+        <h3 id="SummonerId">Summoner tag</h3>
+        <input type="hidden" id="SummonerName" name="summoner_name" value="StaticNameForTesting"> <!-- Hidden field for demonstration -->
+
+        <button type="submit" id="SaveSummonerButton">Save Summoner</button>
+    </div>
+</form>
+
+<div id="divisionSoloQ">
+
+</div>
+<div id="divisionFlexQ">
+
+</div>
+
+
+<div>
+
+    <button>Match history</button>
+</div>
+
+    <!-- Include the button template -->
+{% endblock %}
