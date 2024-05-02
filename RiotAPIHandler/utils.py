@@ -2,6 +2,7 @@
 
 from pulsefire.clients import RiotAPIClient
 from Common.models import SummonerDTO, AccountDTO, LeagueEntryDTO
+import asyncio
 
 async def FetchSummoner(summoner_name):
     #api_key = settings.RIOT_API_KEY  # Store your API key in settings.py for security
@@ -15,7 +16,7 @@ async def FetchSummoner(summoner_name):
             else:
                 return None
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred in FetchSummoner: {e}")
         return None
 
 async def FetchAccountByPuuid(puuid):
@@ -28,7 +29,7 @@ async def FetchAccountByPuuid(puuid):
             else:
                 return None
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred in FetchAccountByPuuid: {e}")
         return None
 
 async def FetchSummonerByPuuid(puuid):
@@ -42,7 +43,7 @@ async def FetchSummonerByPuuid(puuid):
             else:
                 return None
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred in FetchSummonerByPuuid: {e}")
         return None
 
 async def FetchSummonerLeagueEntry(summonerid):
@@ -58,7 +59,7 @@ async def FetchSummonerLeagueEntry(summonerid):
             else:
                 return None
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred in FetchSummonerLeagueEntry: {e}")
         return None
 
 async def FetchSummonerMatchHistory(puuid):
@@ -83,15 +84,11 @@ async def FetchMatch(id):
             default_headers={"X-Riot-Token": 'RGAPI-52d96824-f97f-428d-93ba-4f806ed7aab8'}) as client):
             data = await client.get_lol_match_v5_match(region="europe", id=id)
             participants = data['metadata']['participants']
-            ParticipantsObjects = []
-            for participant in participants:
-                participantsummoner = await FetchSummonerByPuuid(participant)
-                participantacc = await FetchAccountByPuuid(participant)
-                participantsummoner.SetAccount(participantacc)
+            resultdata = await fetch_summoner_details(participants)
 
-                ParticipantsObjects.append(participantsummoner)
-            for i in ParticipantsObjects:
+            for i in resultdata:
                 print(i)
+
 
             if data:
                 entriesDict = {}
@@ -99,8 +96,29 @@ async def FetchMatch(id):
             else:
                 return None
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred in FetchMatch: {e}")
         return None
+
+
+
+
+
+async def fetch_summoner_details(participant_puuids):
+    tasks = []
+    for puuid in participant_puuids:
+        summoner_task = FetchSummonerByPuuid(puuid)
+        account_task = FetchAccountByPuuid(puuid)
+        tasks.append(asyncio.gather(summoner_task, account_task))
+
+    results = await asyncio.gather(*tasks)
+    participant_objects = []
+    for result in results:
+        summoner, account = result
+        summoner.SetAccount(account)
+        participant_objects.append(summoner)
+
+    return participant_objects
+
 
 def parseSoloQEntry(data):
     for entry in data:
