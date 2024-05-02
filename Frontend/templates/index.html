@@ -7,6 +7,20 @@
 
 {% block content %}
     <p>This is a custom template for the Polls app.</p>
+    <label for="summonername">Summonername: </label>
+    <input id="summonername" type="text">
+    <button onclick="redirectToSummoner()">Find Summoner</button>
+
+    <script>
+        function redirectToSummoner() {
+            var summonerName = document.getElementById('summonername').value;
+            if(summonerName) {
+                window.location.href = `${window.location.origin}/summoner/eune/${summonerName}`;
+            } else {
+                alert('Please enter a summoner name.');
+            }
+        }
+    </script>
 {% endblock %}
 
 {% block footer %}
