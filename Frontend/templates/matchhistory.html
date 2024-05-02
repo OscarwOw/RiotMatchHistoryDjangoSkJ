@@ -1,0 +1,29 @@
+<!-- Frontend/templates/Frontend/summoner.html -->
+{% extends 'base.html' %}
+
+{% block title %}Summoner Page{% endblock %}
+
+{% block content %}
+
+<!-- summoner.html -->
+
+    {% csrf_token %}
+    <div id="MatchHistory">
+        <h2 id="SummonerNameLabel">{{ summonername }}</h2>
+        <h3 id="SummonerId">Summoner tag</h3>
+
+
+
+    </div>
+
+
+
+
+
+<div>
+
+    <button>Match history</button>
+</div>
+
+    <!-- Include the button template -->
+{% endblock %}

@@ -34,8 +34,19 @@
 
 <div>
 
-    <button>Match history</button>
+    <button onclick="redirectToMatchHistory()">Match history</button>
 </div>
+
+<script >
+    function redirectToMatchHistory() {
+            var summonerName = "{{ summonername|escapejs }}"
+            if(summonerName) {
+                window.location.href = `${window.location.origin}/summoner/eune/${summonerName}/matchhistory`;
+            } else {
+                alert('Please enter a summoner name.');
+            }
+        }
+</script>
 
     <!-- Include the button template -->
 {% endblock %}

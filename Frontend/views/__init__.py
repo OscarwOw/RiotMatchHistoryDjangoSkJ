@@ -1,1 +1,1 @@
-from .index import index, summonerView, summonerNotFoundView
+from .index import index, summonerView, summonerNotFoundView, matchHistoryView

@@ -69,8 +69,8 @@ async def FetchSummonerMatchHistory(puuid):
             data = await client.get_lol_match_v5_match_ids_by_puuid(region="europe", puuid=puuid)
             match = await FetchMatch(data[0])
 
-            if data:
-                entriesDict = {}
+            if match:
+                return match
 
             else:
                 return None
