@@ -127,4 +127,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-API_KEY = 'RGAPI-d6f5fc76-61c6-45be-a6d6-420cbf0c0912'
+API_KEY = 'RGAPI-7d389fb6-5a4a-4b8c-8165-7c6027f5607b'

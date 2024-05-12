@@ -83,6 +83,35 @@
         color: #f0b429; /* Gold color for labels */
     }
 
+    #players {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    #redteam, #blueteam {
+        flex: 1;
+        margin: 5px;
+        padding: 10px;
+        background: #252525; /* Dark background for each team area */
+        border-radius: 8px;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+    .summonercard {
+        background: #333; /* Slightly lighter background for contrast */
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .summonercard h4 {
+        margin: 0 0 10px 0; /* Space out the header from the details */
+        color: #f0b429; /* Gold color for emphasis and style */
+    }
+
 
 </style>
 
@@ -205,12 +234,29 @@
 
         <div id="gameDetails" style="display: none;">
             <h3>Game Info</h3>
-            {{match.info.participants.0.kills}}/{{match.info.participants.0.deaths}}/{{match.info.participants.0.assists}}
+            <div id="players">
+                <div id="redteam">
+                    <h4>Red Team</h4>
+                    {% for participant in match.info.participants %}
+                        {% if participant.teamId == 200 %}
+                            <div class="summonercard">
+                                {% include "matchdetailparticipant.html" with participant=participant participant_number=forloop.counter %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div id="blueteam">
+                    <h4>Blue Team</h4>
+                    {% for participant in match.info.participants %}
+                        {% if participant.teamId == 100 %}
+                            <div class="summonercard">
+                                {% include "matchdetailparticipant.html" with participant=participant participant_number=forloop.counter %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-
-
-
-
     </div>
 </div>
 
