@@ -4,19 +4,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Application{% endblock %}</title>
+    <title>{% block title %}Check Summoner Stats{% endblock %}</title>
 </head>
-<body>
-    <header>
+<body class="body-style">
+    <header class="header-style">
         <h1>{% block header %}Welcome to My Application!{% endblock %}</h1>
+        <nav>
+            <ul class="navbar-style">
+                <li class="navbar-item"><a class="navbar-link" href="{% url 'home' %}">Home</a></li>
+                <!-- More links -->
+            </ul>
+        </nav>
     </header>
 
-    <main>
+    <main class="main-style">
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
-        {% block footer %}Copyright &copy; 2021{% endblock %}
+    <footer class="footer-style">
+        {% block footer %}this page was created by Adam Beloš.{% endblock %}
     </footer>
 </body>
 </html>
+
+<style>
+    /* Base styles for the body, which can be used across the application */
+.body-style {
+    font-family: Arial, sans-serif;
+    background-color: #0e0e10;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.header-style {
+    background-color: #1a1a2e;
+    color: #e5e5e5;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.navbar-style {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.navbar-item {
+    display: inline;
+    margin-right: 10px;
+}
+
+.navbar-link {
+    color: #f0b429;
+    text-decoration: none;
+}
+
+.main-style {
+    margin: 20px;
+    padding: 20px;
+    background-color: #16161a;
+    border-radius: 8px;
+}
+
+.footer-style {
+    background-color: #1a1a2e;
+    color: #ccc;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.input-style {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: white;
+}
+
+.button-style {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* Additional styles for specific elements or pages */
+.team-style {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.select-style {
+    padding: 8px;
+    width: 100%; /* Ensures the select box stretches to full container width */
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Light grey border */
+    background-color: #333;
+    color: white;
+    outline: none; /* Removes the default focus outline */
+}
+
+.select-style:hover {
+    border-color: #f0b429; /* Changes the border color on hover to a gold tone */
+}
+
+.select-style:focus {
+    border-color: #f0b429; /* Keeps the border color gold when focused */
+}
+
+
+</style>

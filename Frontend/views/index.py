@@ -4,14 +4,16 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
-def summonerView(request, summonername="W1S OscarwOw", summonerDetail=None):
+def summonerView(request, summonername, summonerDetail=None, server='eune'):
     if summonerDetail is not None:
-        print(summonerDetail)
+        print(f"summoner derail: {summonerDetail}")
         context = {
+            'server': server,
             'summonername': summonername,
+            'summonerdetail': summonerDetail,
             'summoner': summonerDetail['summoner'],
-            'soloQ': summonerDetail['summonerentries']['soloQ'], #TODO fix context so that it handles if no data found
-            'flexQ': summonerDetail['summonerentries']['flexQ']
+            #'soloQ': summonerDetail,#['summonerentries']['soloQ'], #TODO fix context so that it handles if no data found
+            #'flexQ': summonerDetail['summonerentries']['flexQ']
         }
     else:
         context = {
@@ -20,23 +22,11 @@ def summonerView(request, summonername="W1S OscarwOw", summonerDetail=None):
         }
     return render(request, 'summoner.html', context)
 
-def matchHistoryView(request, summonername="W1S OscarwOw", matchhistory=None):
+def matchHistoryView(request, summonername="W1S OscarwOw", matchhistory=None, summonerid=None):
     if matchhistory is not None:
-        print(matchhistory)
-        context = {
-            'summonername': summonername,
-            'participant1': matchhistory['metadata']['participants'][0]['account']['gameName'],
-            'participant2': matchhistory['metadata']['participants'][1]['account']['gameName'],
-            'participant3': matchhistory['metadata']['participants'][2]['account']['gameName'],
-            'participant4': matchhistory['metadata']['participants'][3]['account']['gameName'],
-            'participant5': matchhistory['metadata']['participants'][4]['account']['gameName'],
-            'participant6': matchhistory['metadata']['participants'][5]['account']['gameName'],
-            'participant7': matchhistory['metadata']['participants'][6]['account']['gameName'],
-            'participant8': matchhistory['metadata']['participants'][7]['account']['gameName'],
-            'participant9': matchhistory['metadata']['participants'][8]['account']['gameName'],
-            'participant10': matchhistory['metadata']['participants'][9]['account']['gameName']
 
-        }
+
+        context = {'summonername': summonername, 'matches': matchhistory['matches'][0], 'summonerid': summonerid}
     else:
         context = {
             'summonername': summonername,
@@ -47,3 +37,14 @@ def matchHistoryView(request, summonername="W1S OscarwOw", matchhistory=None):
 
 def summonerNotFoundView(request, summonername):
     return render(request, 'summonerNotFound.html', {"name": summonername})
+
+def matchNotFoundView(request, id):
+    return render(request, 'matchNotFound.html', {"id": id})
+
+def matchDetailView(request, match, server):
+    context = {'match': match,
+               'blue_team_range': range(0, 5),  # Zero-based indices for JavaScript
+               'red_team_range': range(5, 10),
+               }
+    print(f"works2")
+    return render(request, 'matchDetail.html', context)

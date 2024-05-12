@@ -5,13 +5,40 @@
 
 {% block content %}
 
-<!-- summoner.html -->
+<!-- matchhistory.html -->
+
+<style>
+    #team1, #team2 {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+    }
+</style>
 
     {% csrf_token %}
     <div id="MatchHistory">
         <h2 id="SummonerNameLabel">{{ summonername }}</h2>
-        <h3 id="SummonerId">Summoner tag</h3>
+        {% for match in matches %}
+            {% include "match.html" with match=match match_number=forloop.counter %}
+        {% endfor %}
 
+
+        <h3 id="SummonerId">match historty</h3>
+        <div id="team1">
+            {{participant1}}
+            {{participant2}}
+            {{participant3}}
+            {{participant4}}
+            {{participant5}}
+        </div>
+        <div id="team2">
+            {{participant6}}
+            {{participant7}}
+            {{participant8}}
+            {{participant9}}
+            {{participant10}}
+        </div>
 
 
     </div>
@@ -22,8 +49,49 @@
 
 <div>
 
-    <button>Match history</button>
 </div>
+
+<script >
+    function redirectToMatchDetail(id) {
+            window.location.href = `${window.location.origin}/matchdetail/eune/${id}`;
+        }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    // Mapping of summoner spell IDs to their names
+    const summonerSpells = {
+        '4': 'SummonerFlash',
+        '6': 'SummonerHaste',
+        '1': 'SummonerBoost',
+        // Add more mappings as needed
+    };
+
+    // Update src attributes for summoner spell images
+    document.querySelectorAll('.summoner-spell').forEach(img => {
+        const spellId = img.getAttribute('data-spell-id');
+        if (spellId in summonerSpells) {
+            img.src = `https://opgg-static.akamaized.net/meta/images/lol/14.9.1/spell/${summonerSpells[spellId]}.png`;
+        }
+    });
+});
+window.onload = function() {
+    var dateElements = document.querySelectorAll('.dateElement');
+
+    dateElements.forEach(function(element) {
+        var timestamp = parseInt(element.getAttribute('data-timestamp'), 10);
+        var date = new Date(timestamp); // Use the timestamp directly as it's already in milliseconds
+
+        // Format the date as "DD MM YYYY HH:mm"
+        var formattedDate = date.getDate().toString().padStart(2, '0') + ' ' +
+                            (date.getMonth() + 1).toString().padStart(2, '0') + ' ' +
+                            date.getFullYear() + ' ' +
+                            date.getHours().toString().padStart(2, '0') + ':' +
+                            date.getMinutes().toString().padStart(2, '0');
+
+        element.textContent = 'Date: ' + formattedDate;
+    });
+};
+
+</script>
 
     <!-- Include the button template -->
 {% endblock %}

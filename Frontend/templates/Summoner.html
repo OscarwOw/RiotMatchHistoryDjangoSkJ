@@ -9,7 +9,8 @@
 
     {% csrf_token %}
     <div id="SummonersDetails">
-        <img src="https://opgg-static.akamaized.net/meta/images/profile_icons/profileIcon660.jpg?image=q_auto,f_webp,w_auto&amp;v=1710914129937" alt="profile image">
+
+        <img src="https://opgg-static.akamaized.net/meta/images/profile_icons/profileIcon{{summonerdetail.summoner.profileIconId}}.jpg?image=q_auto,f_webp,w_auto&amp;v=1710914129937" alt="profile image">
         <h2 id="SummonerNameLabel">{{ summonername }}</h2>
         <h3 id="SummonerId">Summoner tag</h3>
 
@@ -20,28 +21,30 @@
 
 <div id="divisionSoloQ">
     soloQ
-    {{soloQ.tier}}
-    {{soloQ.rank}}
-    {{soloQ.leaguePoints}}
+    {{summonerdetail.summonerentries.soloQ.tier}}
+    {{summonerdetail.summonerentries.soloQ.rank}}
+    {{summonerdetail.summonerentries.soloQ.leaguePoints}}
+
 </div>
 <div id="divisionFlexQ">
     flexQ
-    {{flexQ.tier}}
-    {{flexQ.rank}}
-    {{flexQ.leaguePoints}}
+    {{summonerdetail.summonerentries.flexQ.tier}}
+    {{summonerdetail.summonerentries.flexQ.rank}}
+    {{summonerdetail.summonerentries.flexQ.leaguePoints}}
 </div>
 
 
 <div>
 
-    <button onclick="redirectToMatchHistory()">Match history</button>
+    <button class="button-style" onclick="redirectToMatchHistory()">Match history</button>
 </div>
 
 <script >
     function redirectToMatchHistory() {
             var summonerName = "{{ summonername|escapejs }}"
+            var server = "{{ server|escapejs }}"
             if(summonerName) {
-                window.location.href = `${window.location.origin}/summoner/eune/${summonerName}/matchhistory`;
+                window.location.href = `${window.location.origin}/summoner/${server}/${summonerName}/matchhistory`;
             } else {
                 alert('Please enter a summoner name.');
             }

@@ -8,6 +8,9 @@ class AccountDTO(models.Model):
     def __str__(self):
         return (f"puuid: {self.puuid}, gameName: {self.gameName}, tagLine: {self.tagLine}" )
 
+    def __getitem__(self, key):
+        return getattr(self, key, None)
+
     @classmethod
     def MapToModel(cls, data):
         return cls(
@@ -15,3 +18,4 @@ class AccountDTO(models.Model):
             gameName=data.get('gameName', ''),
             tagLine=data.get('tagLine', '')
         )
+

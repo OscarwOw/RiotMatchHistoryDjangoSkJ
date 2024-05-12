@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Common',
     'RiotAPIHandler',
 
+
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+API_KEY = 'RGAPI-d6f5fc76-61c6-45be-a6d6-420cbf0c0912'

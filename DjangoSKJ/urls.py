@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Frontend.views import index, summonerView
-from RiotAPIHandler.views import summonerProfile, summonerMatchHistory
+from RiotAPIHandler.views import summonerProfile, summonerMatchHistory, MatchDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('summoner/', summonerView, name='summoner'),
     #path('summoner/save', save_summoner, name='save_summoner'),  # Handles the POST request from the form
-    path('summoner/eune/<str:summonername>/', summonerProfile, name='SummonerProfile'),
-    path('summoner/eune/<str:summonername>/matchhistory', summonerMatchHistory, name='SummonerMatchHistory'),
+    path('summoner/<str:server>/<str:summonername>/', summonerProfile, name='SummonerProfile'),
+    path('summoner/<str:server>/<str:summonername>/matchhistory', summonerMatchHistory, name='SummonerMatchHistory'),
+    path('matchdetail/<str:server>/<str:matchid>', MatchDetail, name='MatchDetail'),
     path('', index, name='home'),
 ]

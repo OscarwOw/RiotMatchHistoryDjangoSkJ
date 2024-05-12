@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Summoner Page{% endblock %}
+
+{% block content %}
+<style>
+    #MatchDetail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    #buttonContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .teamButton {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #1a1a2e;
+        color: white;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+    .teamButton img {
+        width: 40px;
+        height: 40px;
+    }
+
+    #gameDetailButton {
+        background-color: #f0b429; /* Gold color for overall game details */
+    }
+
+    #contentArea {
+        padding: 20px;
+        border: 1px solid #333;
+        width: 100%;
+        min-height: 300px;
+        background-color: #242424;
+        color: white;
+        text-align: center;
+    }
+</style>
+
+<div id="MatchDetail" data-match-info='{{ match_info_json|safe }}'>
+    <div id="buttonContainer">
+        <!-- Blue team buttons -->
+        {% for participant in match.info.participants %}
+                {% if participant.teamId == 100 %}
+                    <button class="teamButton blueTeam" onclick="changeContent({{ forloop.counter  }} -1)"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{participant.championName}}.png"></button>
+                {% endif %}
+        {% endfor %}
+
+
+        <!-- Game detail button -->
+        <button id="gameDetailButton" onclick="changeContent('game')">Game Details</button>
+        <!-- Red team buttons -->
+        {% for participant in match.info.participants %}
+                {% if participant.teamId == 200 %}
+                    <button class="teamButton redTeam" onclick="changeContent({{ forloop.counter  }}-1)"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{participant.championName}}.png"></button>
+                {% endif %}
+        {% endfor %}
+    </div>
+
+    <div id="contentArea">
+        {% for participant in match.info.participants %}
+
+                <div id="playerDetail{{ forloop.counter0 }}" style="display: none;" class="playerdetail">
+                    {{participant.summonerName}}
+                    {{participant.kills}}/{{participant.deaths}}/{{participant.assists}}
+                    minions: {{participant.totalMinionsKilled}}
+                    champion level: {{participant.champLevel}}
+                    firstblood: {{participant.firstBloodKill}}
+                    firstturret: {{participant.firstTowerKill}}
+                    gold: {{participant.goldEarned}}
+                    killing sprees: {{participant.killingSprees}}
+                    largest killing spree: {{participant.largestKillingSpree}}
+                    total damage dealth: {{participant.totalDamageDealt}}
+                    total damage dealth to champs: {{participant.totalDamageDealtToChampions}}
+                    vision score: {{participant.visionScore}}
+
+                </div>
+
+        {% endfor %}
+
+
+
+        <div id="gameDetails" style="display: none;">
+            <h3>Game Info</h3>
+            {{match.info.participants.0.kills}}/{{match.info.participants.0.deaths}}/{{match.info.participants.0.assists}}
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<script>
+
+function changeContent(playerId) {
+    // Select all elements with the class 'playerdetail' and hide them
+
+
+    document.querySelectorAll('.playerdetail').forEach(div => {
+        div.style.display = 'none';
+    });
+
+    // Hide game details as well
+    document.getElementById('gameDetails').style.display = 'none';
+
+    if (playerId === 'game') {
+        // Show game details if the 'game' button was clicked
+        document.getElementById('gameDetails').style.display = 'block';
+    } else {
+        // Otherwise, show the details for the specific player
+        let detailDiv = document.getElementById('playerDetail' + playerId);
+        if (detailDiv) {
+            detailDiv.style.display = 'block';
+        } else {
+            // If no such element exists, display a fallback message
+            document.getElementById('contentArea').innerHTML = 'No data available for this player.';
+        }
+    }
+}
+</script>
+
+{% endblock %}
+
+
+

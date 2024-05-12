@@ -1,0 +1,221 @@
+<div class="match" >
+    <div class="match-header" onclick="redirectToMatchDetail('{{ match.metadata.matchId }}')">
+        <h4>Match: {{ match_number }}</h4>
+        <p class="dateElement" data-timestamp="{{ match.info.gameCreation }}">Date: Loading...</p>
+        <p>Game Mode: {{ match.info.gameType }}</p>
+    </div>
+     <div class="match-body">
+        <div id="player-detail">
+            {% for participant in match.info.participants %}
+                {% if participant.puuid == summonerid %}
+
+                    <div id="champion-and-summoners">
+                        <div class="image-container">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png">
+                        </div>
+                        <div id="summoner_spells">
+                            <img class="summoner-spell-img" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/spell/{{ participant.summoner1Id }}.png" data-spell-id="{{ participant.summoner1Id }}">
+                            <img class="summoner-spell-img" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/spell/{{ participant.summoner2Id }}.png" data-spell-id="{{ participant.summoner2Id }}">
+                        </div>
+                    </div>
+
+
+                    <div id="itemsandscore">
+                        <div id="itemsoutside">
+
+                            <div id="items">
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item0}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item1}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item2}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item3}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item4}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item5}}.png" alt=""></div>
+                                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item6}}.png" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="score">
+                            <p>score: {{ participant.kills }}/{{ participant.deaths }}/{{ participant.assists }}</p>
+                            <p>creepscore: {{ participant.totalMinionsKilled }}</p>
+                        </div>
+                    </div>
+
+                    <!-- https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/Aatrox.png add this imgs -->
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div id="teams">
+            <div id="blue">
+                <strong>Blue:</strong>
+                <ul>
+                    {% for participant in match.info.participants %}
+                        {% if participant.teamId == 100 %}
+                            <li class="team-list">
+                                <div class="imagecontainerinlist"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png"></div>
+                                {{ participant.summonerName }} </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div id="red">
+                <strong>Red:</strong>
+                <ul>
+                    {% for participant in match.info.participants %}
+                        {% if participant.teamId == 200 %}
+                            <li class="team-list"><div class="imagecontainerinlist"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png"></div>
+                                {{ participant.summonerName }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.match {
+    background-color: #242424;
+    color: #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.match-header {
+    cursor: pointer;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+}
+
+.match-header h4 {
+    color: #f0b429; /* Gold color for match number */
+}
+
+.match-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+#player-detail {
+    flex: 2;
+    display: flex;
+    width: 66.66%;
+}
+
+#teams {
+    flex: 1;
+    display: flex;
+    width: 33.33%;
+}
+
+#champion-and-summoners, #itemsandscore {
+    flex: 1;
+    width: 50%;
+}
+
+#champion-and-summoners {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.image-container {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
+.summoner-spell-img {
+    width: 25px;
+    height: 25px;
+}
+/*
+#summoner_spells {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}*/
+
+
+#blue, #red {
+    flex: 1;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+
+
+
+    #items {
+      display: flex;
+    width: calc(30px * 7); /* Adjust the container width based on scaled size */
+    height: 18px; /* Height to match scaled image height */
+
+}
+
+.imagecontainer {
+    width: 30px; /* Width of container matches the visual width of scaled image */
+    height: 30px;
+    background: radial-gradient(circle, #add8e6 30%, #00008b 100%);
+}
+
+.imagecontainer img {
+    padding: 0px
+    margin: 0px
+}
+
+
+#itemsoutside {
+
+
+}
+
+.imagecontainerinlist {
+    width: 30px; /* Width of container matches the visual width of scaled image */
+    height: 30px;
+    flex-shrink: 0; /* Prevent the image container from shrinking */
+    margin-right: 10px; /* Optional: Add some space between the image and text */
+}
+
+.imagecontainerinlist img {
+    padding: 0px
+    margin: 0px
+}
+
+.team-list{
+    display: flex; /* Make the list item a flex container */
+    align-items: center; /* Vertically align the items in the middle */
+    white-space: nowrap; /* Prevent the text from wrapping */
+}
+
+    .score {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #f0b429;
+}
+
+</style>

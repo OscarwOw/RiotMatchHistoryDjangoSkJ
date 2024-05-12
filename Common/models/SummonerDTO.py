@@ -20,6 +20,9 @@ class SummonerDTO(models.Model):
                 f"summonerId: {self.summonerId}, puuid: {self.puuid}, summonerLevel: {self.summonerLevel}, "
                 f"Account: {acc}")
 
+    def __getitem__(self, key):
+        return getattr(self, key, None)
+
     @classmethod
     def MapToModel(cls, data):
         return cls(

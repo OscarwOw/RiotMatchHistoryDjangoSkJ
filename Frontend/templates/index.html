@@ -1,21 +1,39 @@
 <!-- Frontend/templates/Frontend/index.html -->
 {% extends 'base.html' %}
 
-{% block title %}My Polls App{% endblock %}
+{% block title %}Find Summoner{% endblock %}
 
-{% block header %}Welcome to My Polls App!{% endblock %}
+{% block header %}Find Summoner!{% endblock %}
 
 {% block content %}
-    <p>This is a custom template for the Polls app.</p>
+    <p>you can find summoner here</p>
     <label for="summonername">Summonername: </label>
-    <input id="summonername" type="text">
-    <button onclick="redirectToSummoner()">Find Summoner</button>
+    <input id="summonername" type="text" class="input-style">
+<label for="server">Server: </label>
+    <select id="server" class="select-style">
+        <option value="eune">EUNE</option>
+        <option value="euw">EUW</option>
+        <option value="na">NA</option>
+        <option value="kr">KR</option>
+        <option value="lan">LAN</option>
+        <option value="las">LAS</option>
+        <option value="br">BR</option>
+        <option value="tr">TR</option>
+        <option value="ru">RU</option>
+        <option value="jp">JP</option>
+        <option value="oce">OCE</option>
+    </select>
+    <button onclick="redirectToSummoner()"  class="button-style">Find Summoner</button>
 
     <script>
         function redirectToSummoner() {
             var summonerName = document.getElementById('summonername').value;
+            var server = document.getElementById('server').value;
+            console.log(summonerName)
+            summonerName = summonerName.replace(/#/g, '-');
+            console.log(summonerName)
             if(summonerName) {
-                window.location.href = `${window.location.origin}/summoner/eune/${summonerName}`;
+                window.location.href = `${window.location.origin}/summoner/${server}/${summonerName}`;
             } else {
                 alert('Please enter a summoner name.');
             }
@@ -23,6 +41,4 @@
     </script>
 {% endblock %}
 
-{% block footer %}
-    Copyright &copy; 2021. All Rights Reserved.
-{% endblock %}
+

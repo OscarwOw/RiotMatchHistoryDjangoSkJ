@@ -1,1 +1,1 @@
-from RiotAPIHandler.views.riotAPIView import  summonerProfile, summonerMatchHistory
+from RiotAPIHandler.views.riotAPIView import  summonerProfile, summonerMatchHistory, MatchDetail
