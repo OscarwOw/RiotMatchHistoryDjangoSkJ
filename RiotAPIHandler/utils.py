@@ -99,7 +99,7 @@ async def FetchSummonerMatchHistory(puuid, server="eune"):
                 default_headers={"X-Riot-Token": settings.API_KEY}) as client):
 
             data = await client.get_lol_match_v5_match_ids_by_puuid(region=api_region, puuid=puuid)
-            firstmatches = data[:5]
+            firstmatches = data[:20]
             tasks = [FetchMatch(match_id, server) for match_id in firstmatches]
             matches = await asyncio.gather(*tasks)
 

@@ -52,8 +52,15 @@
 </div>
 
 <script >
+    function redirecttosummoner(summonername, summonertag){
+        let server = "{{ server|escapejs }}";
+        let summonernamewithtag = summonername + '-' + summonertag;
+        window.location.href = `${window.location.origin}/summoner/${server}/${summonernamewithtag}`;
+    }
+
     function redirectToMatchDetail(id) {
-            window.location.href = `${window.location.origin}/matchdetail/eune/${id}`;
+            let server = "{{ server|escapejs }}"
+            window.location.href = `${window.location.origin}/matchdetail/${server}/${id}`;
         }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -62,11 +69,15 @@
         '4': 'SummonerFlash',
         '6': 'SummonerHaste',
         '1': 'SummonerBoost',
+        '14': 'SummonerDot',
+        '12': 'SummonerTeleport',
+        '3': 'SummonerExhaust',
+
         // Add more mappings as needed
     };
 
     // Update src attributes for summoner spell images
-    document.querySelectorAll('.summoner-spell').forEach(img => {
+    document.querySelectorAll('.summoner-spell-img').forEach(img => {
         const spellId = img.getAttribute('data-spell-id');
         if (spellId in summonerSpells) {
             img.src = `https://opgg-static.akamaized.net/meta/images/lol/14.9.1/spell/${summonerSpells[spellId]}.png`;

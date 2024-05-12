@@ -20,7 +20,7 @@ async def summonerMatchHistory(request, summonername, server):
     matchhistory['matches'] = []
     matchhistory['matches'].append(matchhistoryFetch)
     #matchhistory['summonername']
-    return matchHistoryView(request, summonername, matchhistory, summoner.puuid)
+    return matchHistoryView(request, summonername, matchhistory, summoner.puuid, server)
 
 
 async def MatchDetail(request, matchid, server):

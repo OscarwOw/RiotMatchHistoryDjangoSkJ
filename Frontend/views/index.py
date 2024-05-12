@@ -22,14 +22,16 @@ def summonerView(request, summonername, summonerDetail=None, server='eune'):
         }
     return render(request, 'summoner.html', context)
 
-def matchHistoryView(request, summonername="W1S OscarwOw", matchhistory=None, summonerid=None):
+def matchHistoryView(request, summonername="W1S OscarwOw", matchhistory=None, summonerid=None, server="eune"):
     if matchhistory is not None:
 
 
-        context = {'summonername': summonername, 'matches': matchhistory['matches'][0], 'summonerid': summonerid}
+        context = {'summonername': summonername, 'matches': matchhistory['matches'][0],
+                   'summonerid': summonerid, 'server': server}
     else:
         context = {
             'summonername': summonername,
+            'server': server,
             'error': "No summoner data available"
         }
     return render(request, 'matchhistory.html', context)

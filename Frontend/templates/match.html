@@ -49,7 +49,7 @@
                 <ul>
                     {% for participant in match.info.participants %}
                         {% if participant.teamId == 100 %}
-                            <li class="team-list">
+                            <li class="team-list pointercursor" onclick="redirecttosummoner('{{participant.summonerName}}', '{{participant.riotIdTagline}}')">
                                 <div class="imagecontainerinlist"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png"></div>
                                 {{ participant.summonerName }} </li>
                         {% endif %}
@@ -62,7 +62,7 @@
                 <ul>
                     {% for participant in match.info.participants %}
                         {% if participant.teamId == 200 %}
-                            <li class="team-list"><div class="imagecontainerinlist"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png"></div>
+                            <li class="team-list pointercursor" onclick="redirecttosummoner('{{participant.summonerName}}', '{{participant.riotIdTagline}}')"><div class="imagecontainerinlist"><img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png"></div>
                                 {{ participant.summonerName }}</li>
                         {% endif %}
                     {% endfor %}
@@ -81,6 +81,10 @@
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pointercursor{
+    cursor: pointer;
 }
 
 .match-header {

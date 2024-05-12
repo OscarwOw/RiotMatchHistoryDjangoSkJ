@@ -45,6 +45,45 @@
         color: white;
         text-align: center;
     }
+
+    #playerDetail .playerdetail {
+        background: #1c1c1c;
+        color: #ccc;
+        padding: 20px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        display: none;  /* Initially hidden */
+    }
+
+    #playerDetail .imagecontainer {
+        display: inline-block;
+        padding: 5px;
+    }
+
+    #playerDetail .image {
+        width: 50px;  /* Adjust size as needed */
+        height: auto;
+        display: block;
+    }
+
+    .stats {
+        background: #2a2a2a; /* darker background for stats section */
+        color: #fff;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .stats div {
+        margin-bottom: 5px;
+        font-size: 14px; /* Adjust font size as necessary */
+    }
+    strong {
+        color: #f0b429; /* Gold color for labels */
+    }
+
+
 </style>
 
 <div id="MatchDetail" data-match-info='{{ match_info_json|safe }}'>
@@ -71,18 +110,92 @@
         {% for participant in match.info.participants %}
 
                 <div id="playerDetail{{ forloop.counter0 }}" style="display: none;" class="playerdetail">
-                    {{participant.summonerName}}
-                    {{participant.kills}}/{{participant.deaths}}/{{participant.assists}}
-                    minions: {{participant.totalMinionsKilled}}
-                    champion level: {{participant.champLevel}}
-                    firstblood: {{participant.firstBloodKill}}
-                    firstturret: {{participant.firstTowerKill}}
-                    gold: {{participant.goldEarned}}
-                    killing sprees: {{participant.killingSprees}}
-                    largest killing spree: {{participant.largestKillingSpree}}
-                    total damage dealth: {{participant.totalDamageDealt}}
-                    total damage dealth to champs: {{participant.totalDamageDealtToChampions}}
-                    vision score: {{participant.visionScore}}
+                    <strong>{{ participant.summonerName }} - {{ participant.riotIdTagline }}</strong>
+
+                    <div id="items">
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item0}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item1}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item2}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item3}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item4}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item5}}.png" alt=""></div>
+                        <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item6}}.png" alt=""></div>
+                    </div>
+
+                    <div id="takedowns" class="stats">
+                        <div><strong>K/D/A:</strong> {{ participant.kills }} / {{ participant.deaths }} / {{ participant.assists }}</div>
+                        <div><strong>Champion Level:</strong> {{ participant.champLevel }}</div>
+                        <div><strong>Killing Sprees:</strong> {{ participant.killingSprees }}</div>
+                        <div><strong>Largest Killing Spree:</strong> {{ participant.largestKillingSpree }}</div>
+                        <div><strong>Double Kills:</strong> {{ participant.doubleKills }}</div>
+                        <div><strong>Triple Kills:</strong> {{ participant.tripleKills }}</div>
+                        <div><strong>Quadra Kills:</strong> {{ participant.quadraKills }}</div>
+                        <div><strong>Penta Kills:</strong> {{ participant.pentaKills }}</div>
+                        <div><strong>Unreal Kills:</strong> {{ participant.unrealKills }}</div>
+                        <div><strong>First Blood:</strong> {{ participant.firstBloodKill | yesno:"Yes,No" }}</div>
+                        <div><strong>First Blood Assist:</strong> {{ participant.firstBloodAssist | yesno:"Yes,No" }}</div>
+                    </div>
+
+                    <div id="farming" class="stats">
+                        <div><strong>Minions Killed:</strong> {{ participant.totalMinionsKilled }}</div>
+                        <div><strong>Total Gold Earned:</strong> {{ participant.goldEarned }}</div>
+                        <div><strong>First Turret Kill:</strong> {{ participant.firstTowerKill | yesno:"Yes,No" }}</div>
+                        <div><strong>First Turret Assist:</strong> {{ participant.firstTowerAssist | yesno:"Yes,No" }}</div>
+                        <div><strong>Baron Kills:</strong> {{ participant.baronKills }}</div>
+                        <div><strong>Dragon Kills:</strong> {{ participant.dragonKills }}</div>
+                        <div><strong>Inhibitor Kills:</strong> {{ participant.inhibitorKills }}</div>
+                        <div><strong>Inhibitor Takedowns:</strong> {{ participant.inhibitorTakedowns }}</div>
+                        <div><strong>Neutral Minions Killed:</strong> {{ participant.neutralMinionsKilled }}</div>
+                        <div><strong>Jungle Minions Killed (Ally):</strong> {{ participant.totalAllyJungleMinionsKilled }}</div>
+                        <div><strong>Jungle Minions Killed (Enemy):</strong> {{ participant.totalEnemyJungleMinionsKilled }}</div>
+                        <div><strong>Turret Kills:</strong> {{ participant.turretKills }}</div>
+                        <div><strong>Turret Takedowns:</strong> {{ participant.turretTakedowns }}</div>
+                    </div>
+
+                    <div id="vision" class="stats">
+                        <div><strong>Detector Wards Placed:</strong> {{ participant.detectorWardsPlaced }}</div>
+                        <div><strong>Sight Wards Bought:</strong> {{ participant.sightWardsBoughtInGame }}</div>
+                        <div><strong>Vision Score:</strong> {{ participant.visionScore }}</div>
+                        <div><strong>Vision Wards Bought:</strong> {{ participant.visionWardsBoughtInGame }}</div>
+                        <div><strong>Wards Killed:</strong> {{ participant.wardsKilled }}</div>
+                        <div><strong>Wards Placed:</strong> {{ participant.wardsPlaced }}</div>
+                    </div>
+
+                    <div id="spellcasts" class="stats">
+                        <div><strong>Spell 1 Casts:</strong> {{ participant.spell1Casts }}</div>
+                        <div><strong>Spell 2 Casts:</strong> {{ participant.spell2Casts }}</div>
+                        <div><strong>Spell 3 Casts:</strong> {{ participant.spell3Casts }}</div>
+                        <div><strong>Spell 4 Casts:</strong> {{ participant.spell4Casts }}</div>
+                        <div><strong>Summoner 1 Casts:</strong> {{ participant.summoner1Casts }}</div>
+                        <div><strong>Summoner 2 Casts:</strong> {{ participant.summoner2Casts }}</div>
+                    </div>
+
+                    <div id="damage" class="stats">
+                        <div><strong>Total Damage Dealt:</strong> {{ participant.totalDamageDealt }}</div>
+                        <div><strong>Total Damage to Champions:</strong> {{ participant.totalDamageDealtToChampions }}</div>
+                        <div><strong>Damage Dealt to Buildings:</strong> {{ participant.damageDealtToBuildings }}</div>
+                        <div><strong>Damage Dealt to Objectives:</strong> {{ participant.damageDealtToObjectives }}</div>
+                        <div><strong>Damage Dealt to Turrets:</strong> {{ participant.damageDealtToTurrets }}</div>
+                        <div><strong>Damage Self Mitigated:</strong> {{ participant.damageSelfMitigated }}</div>
+                        <div><strong>Largest Critical Strike:</strong> {{ participant.largestCriticalStrike }}</div>
+                        <div><strong>Magic Damage Dealt:</strong> {{ participant.magicDamageDealt }}</div>
+                        <div><strong>Magic Damage to Champions:</strong> {{ participant.magicDamageDealtToChampions }}</div>
+                        <div><strong>Magic Damage Taken:</strong> {{ participant.magicDamageTaken }}</div>
+                        <div><strong>Physical Damage Dealt:</strong> {{ participant.physicalDamageDealt }}</div>
+                        <div><strong>Physical Damage to Champions:</strong> {{ participant.physicalDamageDealtToChampions }}</div>
+                        <div><strong>Physical Damage Taken:</strong> {{ participant.physicalDamageTaken }}</div>
+                        <div><strong>Time CC'ing Others:</strong> {{ participant.timeCCingOthers }}</div>
+                        <div><strong>Total Damage Shielded on Teammates:</strong> {{ participant.totalDamageShieldedOnTeammates }}</div>
+                        <div><strong>Total Damage Taken:</strong> {{ participant.totalDamageTaken }}</div>
+                        <div><strong>Total Heal:</strong> {{ participant.totalHeal }}</div>
+                        <div><strong>Total Heals on Teammates:</strong> {{ participant.totalHealsOnTeammates }}</div>
+                        <div><strong>Total Time CC Dealt:</strong> {{ participant.totalTimeCCDealt }}</div>
+                        <div><strong>Total Units Healed:</strong> {{ participant.totalUnitsHealed }}</div>
+                        <div><strong>True Damage Dealt:</strong> {{ participant.trueDamageDealt }}</div>
+                        <div><strong>True Damage to Champions:</strong> {{ participant.trueDamageDealtToChampions }}</div>
+                        <div><strong>True Damage Taken:</strong> {{ participant.trueDamageTaken }}</div>
+                    </div>
+
 
                 </div>
 
