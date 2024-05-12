@@ -112,6 +112,27 @@
         color: #f0b429; /* Gold color for emphasis and style */
     }
 
+.items {
+    display: flex;
+    width: calc(30px * 7); /* Adjust the container width based on scaled size */
+    height: 18px; /* Height to match scaled image height */
+
+}
+.image {
+    max-width: 100%;
+    height: auto;
+    padding: 0px
+    margin: 0px
+}
+
+.imagecontainer {
+    width: 30px; /* Width of container matches the visual width of scaled image */
+    height: 30px;
+    background: radial-gradient(circle, #add8e6 30%, #00008b 100%);
+}
+
+
+
 
 </style>
 
@@ -261,6 +282,12 @@
 </div>
 
 <script>
+
+    function redirecttosummoner(summonername, summonertag){
+        let server = "{{ server|escapejs }}";
+        let summonernamewithtag = summonername + '-' + summonertag;
+        window.location.href = `${window.location.origin}/summoner/${server}/${summonernamewithtag}`;
+    }
 
 function changeContent(playerId) {
     // Select all elements with the class 'playerdetail' and hide them

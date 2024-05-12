@@ -1,9 +1,71 @@
 <body>
-    <div>{{participant.summonerName}}</div>
-    {{participant.kills}}/{{participant.deaths}}/{{participant.assists}}
-    <div><strong>Total Damage to Champions:</strong> {{ participant.totalDamageDealtToChampions }}</div>
-    <div><strong>True Damage to Champions:</strong> {{ participant.trueDamageDealtToChampions }}</div>
-    <div><strong>Physical Damage to Champions:</strong> {{ participant.physicalDamageDealtToChampions }}</div>
-    <div><strong>Magic Damage to Champions:</strong> {{ participant.magicDamageDealtToChampions }}</div>
-    <div><strong>Total Damage Taken:</strong> {{ participant.totalDamageTaken }}</div>
+    <div class="summonercard">
+            <img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png">
+            <div onclick="redirecttosummoner('{{participant.summonerName}}', '{{participant.riotIdTagline}}')">{{ participant.summonerName }}</div>
+            <div class="statline">{{ participant.kills }}/{{ participant.deaths }}/{{ participant.assists }}</div>
+
+        <div class="itembox">
+            <div class="items">
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item0}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item1}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item2}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item3}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item4}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item5}}.png" alt=""></div>
+                <div class="imagecontainer"><img class="image" src="https://opgg-static.akamaized.net/meta/images/lol/14.9.1/item/{{participant.item6}}.png" alt=""></div>
+            </div>
+        </div>
+        <div class="statline"><strong>Total Damage to Champions:</strong> {{ participant.totalDamageDealtToChampions }}</div>
+        <div class="statline"><strong>True Damage to Champions:</strong> {{ participant.trueDamageDealtToChampions }}</div>
+        <div class="statline"><strong>Physical Damage to Champions:</strong> {{ participant.physicalDamageDealtToChampions }}</div>
+        <div class="statline"><strong>Magic Damage to Champions:</strong> {{ participant.magicDamageDealtToChampions }}</div>
+        <div class="statline"><strong>Total Damage Taken:</strong> {{ participant.totalDamageTaken }}</div>
+    </div>
 </body>
+<style>
+.summonercard {
+    background: #1e2128;
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.summonercard img {
+    width: 80px; /* Larger champion image */
+    height: auto;
+    border-radius: 50%; /* Circular image */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+.summonercard > div {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #ddd; /* Slightly lighter text for readability */
+}
+
+.statline {
+    background: #292d3e;
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.statline strong {
+    color: #f0b429; /* Gold color for emphasis */
+}
+
+.summonercard .imagecontainer {
+    display: inline-block; /* To ensure the custom item styles remain untouched */
+    vertical-align: top;
+}
+
+.items {
+    justify-content: center;
+}
+</style>

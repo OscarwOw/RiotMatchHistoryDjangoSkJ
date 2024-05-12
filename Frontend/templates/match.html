@@ -4,11 +4,11 @@
         <p class="dateElement" data-timestamp="{{ match.info.gameCreation }}">Date: Loading...</p>
         <p>Game Mode: {{ match.info.gameType }}</p>
     </div>
-     <div class="match-body">
+     <div class="match-body matchbody{{ match.metadata.matchId }}">
         <div id="player-detail">
             {% for participant in match.info.participants %}
                 {% if participant.puuid == summonerid %}
-
+                    <div id="winStatus{{ match.metadata.matchId }}" style="display: none;" data-win="{{ participant.win }}"></div>
                     <div id="champion-and-summoners">
                         <div class="image-container">
                             <img src="https://ddragon.leagueoflegends.com/cdn/12.4.1/img/champion/{{ participant.championName }}.png">
@@ -72,6 +72,32 @@
 
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all elements that contain the win status
+    var winStatusElements = document.querySelectorAll('[id^="winStatus"]');
+
+    winStatusElements.forEach(function(element) {
+        // Extract the match ID from the element's ID
+        var matchId = element.id.replace('winStatus', '');
+
+        // Find the corresponding match body using the match ID
+        var matchBody = document.querySelector('.matchbody' + matchId);
+
+        // Get the win status from the data attribute
+        var winStatus = element.getAttribute('data-win');
+
+        // Set the background color based on the win status
+        if (winStatus === 'True') {
+            matchBody.style.backgroundColor = 'rgba(0, 123, 255, 0.2)';  // Blueish for win
+        } else {
+            matchBody.style.backgroundColor = 'rgba(255, 76, 76, 0.2)';  // Redish for loss
+        }
+    });
+});
+</script>
+
 
 <style>
 .match {

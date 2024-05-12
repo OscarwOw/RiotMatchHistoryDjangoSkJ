@@ -47,6 +47,7 @@ def matchDetailView(request, match, server):
     context = {'match': match,
                'blue_team_range': range(0, 5),  # Zero-based indices for JavaScript
                'red_team_range': range(5, 10),
+               'server': server,
                }
     print(f"works2")
     return render(request, 'matchDetail.html', context)
